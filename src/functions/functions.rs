@@ -167,7 +167,7 @@ pub fn register_user(ar: &[String; 3]) -> String {
 ////////////////////////////////////
 pub fn first_db_creation() {
     let dbkey: &[u8] = &[ //#changemedb
-        0,0 //write 32 or 64 random numbers here (0-255)
+        0,0 //write 32 random numbers here (0-255)
     ];
     let dbkey: &Key<Aes256Gcm> = dbkey.into();
     let dbcipher = Aes256Gcm::new(dbkey);
@@ -186,7 +186,7 @@ pub fn first_db_creation() {
             >,
             aes_gcm::aead::consts::B0,
         >,
-    > = Nonce::from_slice(b"00a"); //#changemedb //write 12 or more random characters
+    > = Nonce::from_slice(b"00a"); //#changemedb //write 12 random characters
 
     let encrypt_db = "./c35312fb3a7e05.db";
     let encrypt_byte_content = fs::read(encrypt_db).unwrap();
@@ -207,7 +207,7 @@ pub fn first_db_creation() {
 
 pub fn decrypt_db() {
     let dbkey: &[u8] = &[ //#changemedb
-        0,0 //write 32 or 64 random numbers here. they should be the same as in first_db_creation()
+        0,0 //write 32 random numbers here (0-255). they should be the same as in first_db_creation()
     ];
     let dbkey: &Key<Aes256Gcm> = dbkey.into();
     let dbcipher = Aes256Gcm::new(dbkey);
@@ -226,7 +226,7 @@ pub fn decrypt_db() {
             >,
             aes_gcm::aead::consts::B0,
         >,
-    > = Nonce::from_slice(b"00a"); //#changemedb //write 12 or more random characters. they should be the same as in first_db_creation()
+    > = Nonce::from_slice(b"00a"); //#changemedb //write 12 random characters. they should be the same as in first_db_creation()
 
     let decrypt_db = get_storage_dir() + "/ec35312fb3a7e05.db";
     let decrypt_byte_content = fs::read(decrypt_db).unwrap();
@@ -249,7 +249,7 @@ pub fn encrypt_db_select() {
 
 pub fn encrypt_db_insert() {
     let dbkey: &[u8] = &[ //#changemedb
-        0,0 //write 32 or 64 random numbers here. they should be the same as in first_db_creation()
+        0,0 //write 32 random numbers here (0-255). they should be the same as in first_db_creation()
     ];
     let dbkey: &Key<Aes256Gcm> = dbkey.into();
     let dbcipher = Aes256Gcm::new(dbkey);
@@ -268,7 +268,7 @@ pub fn encrypt_db_insert() {
             >,
             aes_gcm::aead::consts::B0,
         >,
-    > = Nonce::from_slice(b"00a"); //#changemedb //write 12 or more random characters. they should be the same as in first_db_creation()
+    > = Nonce::from_slice(b"00a"); //#changemedb //write 12 random characters. they should be the same as in first_db_creation()
     
     let encrypt_db = get_storage_dir() + "/c35312fb3a7e05.db";
     let encrypt_byte_content = fs::read(encrypt_db).unwrap();
@@ -288,7 +288,7 @@ pub fn encrypt_db_insert() {
 pub fn insert_passwords(ar: &[String; 2]) {
     unsafe {
         let key: &[u8] = &[ //#changemepassword encrypting the logins and passwords you entered
-            0, 0 //write 32 or 64 random numbers here.
+            0, 0 //write 32 random numbers here (0-255).
         ];
         let key: &Key<Aes256Gcm> = key.into();
         let cipher = Aes256Gcm::new(key);
@@ -405,7 +405,7 @@ pub fn show_passwords() {
                         DELETION.push(k.id as u8);
 
                         let key: &[u8] = &[ //#changemepassword encrypting the logins and passwords you entered
-                            0,0 //write 32 or 64 random numbers here. it should be the same as in insert_passwords()
+                            0,0 //write 32 random numbers here (0-255). it should be the same as in insert_passwords()
                         ];
                         let key: &Key<Aes256Gcm> = key.into();
                         let cipher = Aes256Gcm::new(key);
