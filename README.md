@@ -1,10 +1,10 @@
 # PMDL
-Simple cli password manager that stores an encrypted database in the %APPDATA% folder. It's very ugly (in terms of code and interface) but a working prototype. Made for fun
+Simple cli password manager that stores an encrypted database in the appdata folder. It's very ugly (in terms of code and interface) but a working prototype. Made for fun
 
 ![My Image](demo.gif)
 
 ## Configuration
-1) Open the project, open file functions.rs and do a search using Ctrl + F. Search for the line `//#changemedb`. Find all the lines with these marks and write your encryption key (explanations are written in the comments in the code)
+1) Open this project, open file functions.rs and do a search using Ctrl + F. Search for the line `//#changemedb`. Find all the lines with these marks and write your encryption key (explanations are written in the comments in the code)
 2) Next, find `//#changemepassword`
 3) After that, in the main.rs, comment out all the functions in main() and add `use pmdl::functions::functions::first_db_creation;`
 4) Write the `first_db_creation();` function in main()

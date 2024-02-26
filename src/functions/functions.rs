@@ -815,13 +815,13 @@ pub fn show_name() {
         if SESSION_USER.is_empty() {
             let old_attributes = WinConsole::output().get_text_attribute().unwrap();
             let new_attributes = ConsoleTextAttribute::BACKGROUND_RED;
-            WinConsole::output().write_utf8("V 0.1.1 ".as_bytes());
+            WinConsole::output().write_utf8("v0.1.1 ".as_bytes());
             WinConsole::output().set_text_attribute(new_attributes);
             WinConsole::output().write_utf8("Not in account >".as_bytes());
             WinConsole::output().set_text_attribute(old_attributes);
             print!(" ");
         } else {
-            print!("V 0.1.1, {} > ", SESSION_USER[0]);
+            print!("v0.1.1, {} > ", SESSION_USER[0]);
         }
     }
 }
