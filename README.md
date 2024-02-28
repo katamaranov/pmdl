@@ -16,4 +16,4 @@ Simple cli password manager that stores an encrypted database in the appdata fol
 
 ## Database dump
 
-This script assumes saving the database in a telegram bot. Create a bot in @BotFather, copy the bot token to a dump.py. Find your user id/chat id (this is done very simply) and copy it to dump.py. Place a dump.py is next to pmdl.exe. And of course you can use dump.py without a password manager application, if you edit the code a little. (after all, it's just a python script)
+Before using, make sure that you have python and pip installed, then write to the console `pip install pyTelegramBotAPI`. This script assumes saving the database in a telegram bot. Create a bot in @BotFather, copy the bot token to a dump.py. Find your user id/chat id (this is done very simply) and copy it to dump.py. Place a dump.py is next to pmdl.exe. And of course you can use dump.py without a password manager application, if you edit the code a little. (after all, it's just a python script)
