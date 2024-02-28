@@ -159,7 +159,7 @@ pub fn register_user(ar: &[String; 3]) -> String {
     conn.execute(&sql, ()).unwrap();
     let id = conn.last_insert_rowid().to_string();
     conn.close().unwrap();
-    encrypt_db_insert();
+    encrypt_db_changes();
 
     id
 }
@@ -196,7 +196,6 @@ pub fn first_db_creation() {
     let mut encrypt_file = OpenOptions::new()
         .write(true)
         .create(true)
-        .attributes(FILE_ATTRIBUTE_HIDDEN)
         .open("./ec35312fb3a7e05.db")
         .unwrap();
     encrypt_file.write_all(&encrypt_ciphertext);
@@ -247,7 +246,7 @@ pub fn encrypt_db_select() {
     fs::remove_file(get_storage_dir() + "/c35312fb3a7e05.db");
 }
 
-pub fn encrypt_db_insert() {
+pub fn encrypt_db_changes() {
     let dbkey: &[u8] = &[ //#changemedb
         0,0 //write 32 random numbers here (0-255). they should be the same as in first_db_creation()
     ];
@@ -278,7 +277,6 @@ pub fn encrypt_db_insert() {
     let mut encrypt_file = OpenOptions::new()
         .write(true)
         .create(true)
-        .attributes(FILE_ATTRIBUTE_HIDDEN)
         .open(get_storage_dir() + "/ec35312fb3a7e05.db")
         .unwrap();
     encrypt_file.write_all(&encrypt_ciphertext);
@@ -315,7 +313,7 @@ pub fn insert_passwords(ar: &[String; 2]) {
         conn.execute(&sql, ()).unwrap();
         vector_passwords();
         conn.close().unwrap();
-        encrypt_db_insert();
+        encrypt_db_changes();
     }
 }
 
@@ -566,6 +564,15 @@ pub fn command_handling(arg: &str) {
                 }
             }
         },
+        "/dump" => {
+            Command::new("cmd")
+            .args(["/c", "py ./dump.py"])
+            .spawn()
+            .expect("cls command failed to start")
+            .wait()
+            .expect("failed to wait");
+            command_prompt();
+        }
         "/l" => unsafe {
             if !SESSION_USER.is_empty() {
                 println!("Already signed in");
@@ -675,7 +682,7 @@ pub fn command_handling(arg: &str) {
                                         println!();
                                         println!("Removed password №{}", cnt);
                                         conn.close().unwrap();
-                                        encrypt_db_insert(); //переименовать инсерт в changes
+                                        encrypt_db_changes(); //переименовать инсерт в changes
                                     } else if cnt != x.to_string() {
                                         nothingfound += 1;
                                     }
@@ -721,7 +728,7 @@ pub fn command_handling(arg: &str) {
                                         println!();
                                         println!("Removed password №{}", mas);
                                         conn.close().unwrap();
-                                        encrypt_db_insert();
+                                        encrypt_db_changes();
                                     } else if mas != x.to_string() {
                                         nothingfound += 1;
                                     }
@@ -766,10 +773,14 @@ pub fn update_screen() {
 }
 
 pub fn get_storage_dir() -> String {
+    let home_dir = env::var("userprofile").unwrap();
+    let dir: String = "/AppData/Local/".to_string();
+    unsafe {home_dir + &dir + &DIR_NAME[0]} // юзать path join
+}
+
+pub fn init() {
     let temp_name = env::var("username").unwrap();
-
     let mut dir_name = String::from("Temp-");
-
     let hashed = hash_with_salt(
         temp_name,
         12,
@@ -778,16 +789,10 @@ pub fn get_storage_dir() -> String {
         ],
     )
     .unwrap();
+    dir_name.push_str(hashed.format_for_version(Version::TwoY).as_str());
+    env::set_var("dir_name_env", &dir_name);
+    unsafe {DIR_NAME.push(dir_name)}
 
-    dir_name.push_str(hashed.format_for_version(Version::TwoA).as_str());
-
-    let home_dir = env::var("userprofile").unwrap();
-    let dir: String = "/AppData/Local/".to_string();
-
-    home_dir + &dir + &dir_name // юзать path join
-}
-
-pub fn init() {
     fs::create_dir_all(get_storage_dir()).unwrap();
     Command::new("cmd")
         .args(["/c", "color 17"])
@@ -845,6 +850,9 @@ pub fn draw_menu() {
     let e = "║        /3 Settings                ║"
         .encode_utf16()
         .collect::<Vec<u16>>();
+    let ee = "║        /dump                      ║"
+        .encode_utf16()
+        .collect::<Vec<u16>>();
     let f = "║        /del %password_id%         ║"
         .encode_utf16()
         .collect::<Vec<u16>>();
@@ -869,6 +877,8 @@ pub fn draw_menu() {
     WinConsole::output().write_utf16(d.as_slice());
     println!();
     WinConsole::output().write_utf16(e.as_slice());
+    println!();
+    WinConsole::output().write_utf16(ee.as_slice());
     println!();
     WinConsole::output().write_utf16(f.as_slice());
     println!();
