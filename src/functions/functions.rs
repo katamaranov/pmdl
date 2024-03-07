@@ -544,6 +544,14 @@ pub fn command_handling(arg: &str) {
                 show_passwords();
             }
         },
+        "/3" => unsafe {
+            if CURRENT_LOCATION != 4 {
+                command_not_found();
+            } else {
+                println!("Will be added soon");
+                command_prompt();
+            }
+        }
         "/help" => unsafe {
             match CURRENT_LOCATION {
                 2 => 'inner: {
@@ -602,6 +610,7 @@ pub fn command_handling(arg: &str) {
             unsafe {
                 SESSION_USER = Default::default();
                 DELETION = Default::default();
+                FIRST_LOGIN = 1;
             }
             start_page();
         }
