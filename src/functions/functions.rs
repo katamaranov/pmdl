@@ -53,11 +53,11 @@ pub fn print_banner() {
 }
 
 pub fn print_banner_small() {
-    println!(r",------. ,--.   ,--.,------.  ,--.    ");
-    println!(r"|  .--. '|   `.'   ||  .-.  \ |  |    ");
-    println!(r"|  '--' ||  |'.'|  ||  |  \  :|  |    ");
-    println!(r"|  | --' |  |   |  ||  '--'  /|  '--. ");
-    println!(r"`--'     `--'   `--'`-------' `-----' ");
+    println!(r"                                          ,------. ,--.   ,--.,------.  ,--.    ");
+    println!(r"                                          |  .--. '|   `.'   ||  .-.  \ |  |    ");
+    println!(r"                                          |  '--' ||  |'.'|  ||  |  \  :|  |    ");
+    println!(r"                                          |  | --' |  |   |  ||  '--'  /|  '--. ");
+    println!(r"                                          `--'     `--'   `--'`-------' `-----' ");
     println!();
 }
 
@@ -554,17 +554,14 @@ pub fn command_handling(arg: &str) {
         }
         "/help" => unsafe {
             match CURRENT_LOCATION {
-                2 => 'inner: {
+                2 => {
                     HELP_WINDOW = 1;
-                    break 'inner;
                 }
-                3 => 'inner: {
+                3 => {
                     HELP_WINDOW = 1;
-                    break 'inner;
                 }
-                5 => 'inner: {
+                5 => {
                     HELP_WINDOW = 1;
-                    break 'inner;
                 }
                 _ => {
                     help();
@@ -677,8 +674,9 @@ pub fn command_handling(arg: &str) {
                             let mut s = 1;
                             let mut nothingfound = 0;
 
-                            for x in &DELETION {
+                            for x in &DELETION { //разделить вектор на чётные и нечётные векторы и уже в них делать проверку
                                 if s % 2 != 0 {
+
                                     if cnt == x.to_string() {
                                         id = DELETION[s].to_string();
                                         decrypt_db();
@@ -691,10 +689,11 @@ pub fn command_handling(arg: &str) {
                                         println!();
                                         println!("Removed password №{}", cnt);
                                         conn.close().unwrap();
-                                        encrypt_db_changes(); //переименовать инсерт в changes
+                                        encrypt_db_changes();
                                     } else if cnt != x.to_string() {
                                         nothingfound += 1;
                                     }
+
                                 }
                                 s += 1;
                             }
@@ -725,6 +724,7 @@ pub fn command_handling(arg: &str) {
 
                             for x in &DELETION {
                                 if s % 2 != 0 {
+
                                     if mas == x.to_string() {
                                         id = DELETION[s].to_string();
                                         decrypt_db();
@@ -741,6 +741,7 @@ pub fn command_handling(arg: &str) {
                                     } else if mas != x.to_string() {
                                         nothingfound += 1;
                                     }
+
                                 }
                                 s += 1;
                             }

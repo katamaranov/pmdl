@@ -110,6 +110,7 @@ pub fn login() {
                 if HELP_WINDOW != 0 {
                     HELP_WINDOW = 0;
                     help();
+                    println!();
                 }
             }
             println!("{v}");
@@ -118,7 +119,7 @@ pub fn login() {
                     .read_line(&mut vars[i])
                     .expect("Failed to read line");
                 if vars[0].chars().next().as_slice() == ['\r'] {
-                    //тут тоже попробовать трим
+                    //тут тоже попробовать trim()
                     println!("Error! The login should not be empty.");
                     pause_between_screens();
                     break 'inner;
@@ -244,7 +245,7 @@ pub fn start_page() {
             println!("Log Out(/lo)");
         } else {
             update_screen();
-            print!("Log In(/l)\t\t"); //\x1b[37m\x1b[44m
+            print!("\t\t\tLog In(/l)\t\t"); //\x1b[37m\x1b[44m
                                       //println!("\x1b[32m\x1b[44mdsfjfsd");// когда мы ставим !глобальный! бэк цвет, то через коды \x1b с бэкграунд цветом возникают проблемы. Проще поменять цвет но при этом сотавить бэк чёрного цвета, рил похуй
                                       //print!("\x1b[1mBOLD TEXT");
                                       //print!("\x1b[37m");

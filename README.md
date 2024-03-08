@@ -1,5 +1,5 @@
 # PMDL
-Simple cli password manager that stores an encrypted database in the appdata folder. It's very ugly (in terms of code and interface) but a working prototype. Made for fun
+Simple cli password manager that stores an encrypted database in the appdata folder. It's Made for fun
 
 ![My Image](demo.gif)
 
