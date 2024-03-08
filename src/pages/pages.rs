@@ -245,16 +245,10 @@ pub fn start_page() {
             println!("Log Out(/lo)");
         } else {
             update_screen();
-            print!("\t\t\tLog In(/l)\t\t"); //\x1b[37m\x1b[44m
-                                      //println!("\x1b[32m\x1b[44mdsfjfsd");// когда мы ставим !глобальный! бэк цвет, то через коды \x1b с бэкграунд цветом возникают проблемы. Проще поменять цвет но при этом сотавить бэк чёрного цвета, рил похуй
-                                      //print!("\x1b[1mBOLD TEXT");
-                                      //print!("\x1b[37m");
-            print!("Help(/help)\t\t"); //изменение цвета текста работает только с чёрным фоном, лучше рял не ебать мозг и просто смириться
+            print!("\t\t\tLog In(/l)\t\t");
+            print!("Help(/help)\t\t");
             println!("Sign Up(/s)");
         }
     }
-    // let mut varikk = String::new();
-    // io::stdin().read_line(&mut varikk).expect("Failed to read line");
-    // command_handling(&varikk);
     command_prompt();
 }
